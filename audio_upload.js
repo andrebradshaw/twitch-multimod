@@ -178,9 +178,14 @@ function createTriggerCards(obj,ref){
       a(cont,[['class','audio_trigger_card'],['style',`display: grid; grid-template-columns: ${rect.width*0.25}px ${rect.width*0.40}px ${rect.width*0.30}px; grid-gap: 2px; padding: 2px; background: #052533;`]]);
       ref.appendChild(cont);
 
+      var pill_panel = ele('div');
+      a(pill_panel,[['style',`padding: 2px; text-align: center;`]]);
+      cont.appendChild(pill_panel);
+      pill_panel.innerText = 'Triggers';
+
       var pill_cont = ele('div');
       a(pill_cont,[['class','trigger_pill_cont'],['style',`display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); grid-gap: 2px; padding: 2px;`]]);
-      cont.appendChild(pill_cont);
+      pill_panel.appendChild(pill_cont);
 
       var inpcont = ele('div');
       a(inpcont, [['style','width: 100%; padding: 22px;']])
@@ -205,7 +210,7 @@ function createTriggerPill(e){
     var filename = this.getAttribute('filename');
     var ref = cn(this.parentElement.parentElement,'trigger_pill_cont')[0];
     var pill = ele('div');
-    a(pill,[['filename',filename],['trigger',trigger],['style',`border: 1px solid transparent; border-radius: 0.4em; background: #5c16c5; padding: 2px;`]])
+    a(pill,[['filename',filename],['trigger',trigger],['style',`border: 1px solid transparent; border-radius: 0.4em; background: #5c16c5; padding: 2px; cursor: pointer;`]])
     ref.appendChild(pill);
     pill.innerText = trigger;
     twitch_sound_files_storage[filename].triggers.push(trigger);
