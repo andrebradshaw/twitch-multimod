@@ -112,7 +112,7 @@ function createUploadHTML(){
 
 createUploadHTML();
 
-var twitch_sound_files_storage = {};
+// var twitch_sound_files_storage = {};
 
 async function handleFiles() {
   var files = this.files;
@@ -170,7 +170,7 @@ console.log(cbod);
   createTriggerCards(audio_map,cbod);
 }
 
-function createTriggerCards(obj,ref){
+async function createTriggerCards(obj,ref){
   var rect = gi(document,cont_id).getBoundingClientRect();
   var keys = Object.keys(obj);
   for(var i=0; i<keys.length; i++){
@@ -200,7 +200,10 @@ function createTriggerCards(obj,ref){
     //   a(filename,[['style',`border: 1px solid transparent; border-radius: 0.3em;`]]);
       cont.appendChild(player);
       player.innerHTML = `<div style="padding: 2px;">${keys[i]}</div>`;
-     twitch_sound_files_storage[keys[i]].triggers.forEach(elm=> createTriggerPillHtml(inp,elm))
+     var k_trigs = twitch_sound_files_storage[keys[i]].triggers;
+     for(var ii =0; ii<k_trigs.length; ii++){       
+       await createTriggerPillHtml(inp,k_trigs[ii]);
+     }
      createAudioPlayer(twitch_sound_files_storage[keys[i]].uri,player);
   }
 }
@@ -213,8 +216,11 @@ function createTriggerPillHtml(elm,trigger){
     ref.appendChild(pill);
     pill.innerText = trigger;
     twitch_sound_files_storage[filename].triggers.push(trigger);
+    console.log(twitch_sound_files_storage[filename].triggers);
+
     elm.value = '';
     pill.onclick = removeTrigger;
+    return true;
 }
 
 function createTriggerPill(e){
