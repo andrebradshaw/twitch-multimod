@@ -78,7 +78,7 @@ function createUploadHTML(){
   if(gi(document,cont_id)) gi(document,cont_id).outerHTML = '';
   var rect = document.body.getBoundingClientRect();
   var cont = ele('div');
-  a(cont,[['id',cont_id],['style', `padding: 0; position: fixed; top: ${rect.top+5}px; left: ${rect.left+5}px; z-index: ${new Date().getTime()}; width: ${rect.width*0.8}px; border: 1px solid #004471; border-radius: 0.4em; background: #052533;`]]);
+  a(cont,[['id',cont_id],['style', `padding: 0; position: fixed; top: ${rect.top+5}px; left: ${rect.left+5}px; z-index: ${new Date().getTime()}; width: ${rect.width*0.8}px; border: 1px solid #004471; border-radius: 0.4em; background: rgba(5, 37, 51, 0.6);`]]);
   document.body.appendChild(cont);
 
   var head = ele('div');
@@ -149,13 +149,13 @@ function getAsMp3(f) {
 
 async function createAudioPlayer(uri,ref){
   var audio = ele('audio');
-  a(audio,[['controls'],['src',uri],['style',`padding: 0; background: #052533;`]]);
+  a(audio,[['controls',''],['src',uri],['style',`padding: 0; background: #052533;`]]);
   ref.appendChild(audio);
 }
 
 async function playAudioAndStop(uri){
   var audio = ele('audio');
-  a(audio,[['controls'],['src',uri],['style',`padding: 0; position: fixed; top: 10px; left: 10px; z-index: ${new Date().getTime()}; width: 300px; border: 1px solid #004471; border-radius: 0.4em; background: #052533;`]]);
+  a(audio,[['controls',''],['src',uri],['style',`padding: 0; position: fixed; top: 10px; left: 10px; z-index: ${new Date().getTime()}; width: 300px; border: 1px solid #004471; border-radius: 0.4em; background: #052533;`]]);
   document.body.appendChild(audio);
   audio.play();
   await delay(4000);
@@ -175,11 +175,11 @@ function createTriggerCards(obj,ref){
   var keys = Object.keys(obj);
   for(var i=0; i<keys.length; i++){
       var cont = ele('div');
-      a(cont,[['class','audio_trigger_card'],['style',`display: grid; grid-template-columns: ${rect.width*0.25}px ${rect.width*0.40}px ${rect.width*0.30}px; grid-gap: 2px; padding: 2px;`]]);
+      a(cont,[['class','audio_trigger_card'],['style',`display: grid; grid-template-columns: ${rect.width*0.25}px ${rect.width*0.40}px ${rect.width*0.30}px; grid-gap: 2px; padding: 2px; background: #052533;`]]);
       ref.appendChild(cont);
 
       var pill_cont = ele('div');
-      a(pill_cont,[['class','trigger_pill_cont'],['style',`display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));; grid-gap: 2px; padding: 2px;`]]);
+      a(pill_cont,[['class','trigger_pill_cont'],['style',`display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); grid-gap: 2px; padding: 2px;`]]);
       cont.appendChild(pill_cont);
 
       var inpcont = ele('div');
@@ -187,14 +187,14 @@ function createTriggerCards(obj,ref){
       cont.appendChild(inpcont);
 
       var inp = ele('input');
-      a(inp,[['placeholder','what will trigger this file?'],['filename',keys[i]],['style',`width: 100%; border: 1px solid transparent; border-radius: 0.3em; height: 30px;`]]);
+      a(inp,[['placeholder','what will trigger this file?'],['filename',keys[i]],['style',`width: 100%; border: 1px solid transparent; border-radius: 0.3em; height: 40px;`]]);
       inpcont.appendChild(inp);
       inp.onkeyup = createTriggerPill;
 
       var player = ele('div');
     //   a(filename,[['style',`border: 1px solid transparent; border-radius: 0.3em;`]]);
       cont.appendChild(player);
-      player.innerHTML = `<div stylle="text-align: center;">${keys[i]}</div>`;
+      player.innerHTML = `<div style="padding: 2px;">${keys[i]}</div>`;
       createAudioPlayer(twitch_sound_files_storage[keys[i]].uri,player);
   }
 }
