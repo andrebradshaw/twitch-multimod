@@ -149,7 +149,7 @@ function getAsMp3(f) {
 
 async function createAudioPlayer(uri,ref){
   var audio = ele('audio');
-  a(audio,[['controls'],['src',uri],['style',`padding: 0; border: 1px solid #004471; border-radius: 0.4em; background: #052533;`]]);
+  a(audio,[['controls'],['src',uri],['style',`padding: 0; background: #052533;`]]);
   ref.appendChild(audio);
 }
 
@@ -179,12 +179,16 @@ function createTriggerCards(obj,ref){
       ref.appendChild(cont);
 
       var pill_cont = ele('div');
-      a(pill_cont,[['class','trigger_pill_cont'],['style',`display: grid; grid-template-rows: auto; grid-gap: 2px; padding: 2px;`]]);
+      a(pill_cont,[['class','trigger_pill_cont'],['style',`display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));; grid-gap: 2px; padding: 2px;`]]);
       cont.appendChild(pill_cont);
 
+      var inpcont = ele('div');
+      a(inpcont, [['style','width: 100%; padding: 22px;']])
+      cont.appendChild(inpcont);
+
       var inp = ele('input');
-      a(inp,[['placeholder','what will trigger this file?'],['filename',keys[i]],['style',`border: 1px solid transparent; border-radius: 0.3em; height: 50px;`]]);
-      cont.appendChild(inp);
+      a(inp,[['placeholder','what will trigger this file?'],['filename',keys[i]],['style',`width: 100%; border: 1px solid transparent; border-radius: 0.3em; height: 30px;`]]);
+      inpcont.appendChild(inp);
       inp.onkeyup = createTriggerPill;
 
       var player = ele('div');
@@ -199,11 +203,23 @@ function createTriggerPill(e){
   if(e.key == "Enter"){
     var trigger = this.value.trim();
     var filename = this.getAttribute('filename');
-    var ref = cn(this.parentElement,'trigger_pill_cont')[0];
+    var ref = cn(this.parentElement.parentElement,'trigger_pill_cont')[0];
     var pill = ele('div');
-    a(pill,[['style',`border: 1px solid transparent; border-radius: 0.4em; background: #5c16c5;`]])
+    a(pill,[['filename',filename],['trigger',trigger],['style',`border: 1px solid transparent; border-radius: 0.4em; background: #5c16c5; padding: 2px;`]])
     ref.appendChild(pill);
     pill.innerText = trigger;
     twitch_sound_files_storage[filename].triggers.push(trigger);
+    this.value = '';
+    pill.onclick = removeTrigger;
   }
+}
+
+function removeTrigger(){
+  var filename = this.getAttribute('filename');
+  var trigger = this.getAttribute('trigger');
+  console.log(twitch_sound_files_storage[filename].triggers);
+  twitch_sound_files_storage[filename].triggers[twitch_sound_files_storage[filename].triggers.indexOf(trigger)] = 0;
+  twitch_sound_files_storage[filename].triggers = twitch_sound_files_storage[filename].triggers.filter(r=> r);
+  console.log(twitch_sound_files_storage[filename].triggers);
+  this.outerHTML = '';
 }
