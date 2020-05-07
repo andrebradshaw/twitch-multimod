@@ -200,22 +200,27 @@ function createTriggerCards(obj,ref){
     //   a(filename,[['style',`border: 1px solid transparent; border-radius: 0.3em;`]]);
       cont.appendChild(player);
       player.innerHTML = `<div style="padding: 2px;">${keys[i]}</div>`;
-      createAudioPlayer(twitch_sound_files_storage[keys[i]].uri,player);
+     twitch_sound_files_storage[keys[i]].triggers.forEach(elm=> createTriggerPillHtml(inp,elm))
+     createAudioPlayer(twitch_sound_files_storage[keys[i]].uri,player);
   }
 }
 
-function createTriggerPill(e){
-  if(e.key == "Enter"){
-    var trigger = this.value.trim();
-    var filename = this.getAttribute('filename');
-    var ref = cn(this.parentElement.parentElement,'trigger_pill_cont')[0];
+function createTriggerPillHtml(elm,trigger){
+    var filename = elm.getAttribute('filename');
+    var ref = cn(elm.parentElement.parentElement,'trigger_pill_cont')[0];
     var pill = ele('div');
     a(pill,[['filename',filename],['trigger',trigger],['style',`border: 1px solid transparent; border-radius: 0.4em; background: #5c16c5; padding: 2px; cursor: pointer;`]])
     ref.appendChild(pill);
     pill.innerText = trigger;
     twitch_sound_files_storage[filename].triggers.push(trigger);
-    this.value = '';
+    elm.value = '';
     pill.onclick = removeTrigger;
+}
+
+function createTriggerPill(e){
+  if(e.key == "Enter"){
+  var trigger = this.value.trim();
+  createTriggerPillHtml(this,trigger);
   }
 }
 
