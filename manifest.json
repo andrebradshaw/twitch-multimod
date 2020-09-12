@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "Twitch Chat Audio",
-    "version": "0.121",
+    "name": "Twitch Chat 3",
+    "version": "0.311",
     "description": "TTS and audio in your Twitch browser",
     "content_scripts": [{
       "matches": ["https://www.twitch.tv/*"],
@@ -18,12 +18,13 @@
       "https://script.google.com/*/*",
       "https://cxl-services.appspot.com/*",
       "https://text-to-speech-demo.ng.bluemix.net/api/v3/*",
-      "https://api.urbandictionary.com/v0/*"
+      "https://api.urbandictionary.com/v0/*",
+      "wss://pubsub-edge.twitch.tv/v1"
     ],
     "icons": {
       "16": "16.png",
       "48": "48.png",
       "128": "128.png"
     }
-  }
+}
   
