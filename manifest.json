@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "Twitch Chat Audio",
+    "version": "0.121",
+    "description": "TTS and audio in your Twitch browser",
+    "content_scripts": [{
+      "matches": ["https://www.twitch.tv/*"],
+      "js": ["content.js"]
+    }],
+    "background" : {
+      "scripts" : ["background.js"],
+      "persistent" : true
+    },
+    "permissions": [
+      "storage",
+      "unlimitedStorage",
+      "tabs",
+      "https://script.google.com/*/*",
+      "https://cxl-services.appspot.com/*",
+      "https://text-to-speech-demo.ng.bluemix.net/api/v3/*",
+      "https://api.urbandictionary.com/v0/*"
+    ],
+    "icons": {
+      "16": "16.png",
+      "48": "48.png",
+      "128": "128.png"
+    }
+  }
+  
