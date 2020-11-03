@@ -291,9 +291,7 @@ function test(){
     .replace(/\//g, '\/')
     .replace(/\?/g, '\?')
     .replace(/\+/g, '\+').replace(/\*/g, '.{0,4}').trim() : '';
-
     const fuzzify = (s) => '\\b' + regXready(s.split('').reduce((a, b) => a + ' ' + b)).replace(/\s+/g, '\\W*') + '(s|)\\b';
-
     function wordsNearEachother(str, joiner) {
         const arr = str.split(/~/);
         if (arr.length > 5) {
@@ -303,15 +301,15 @@ function test(){
         var containArr = [];
         function comboLoop(arr, cont) {
             if (arr.length == 0) {
-            var row = cont.join(joiner);
-            containArr.push(row)
+                var row = cont.join(joiner);
+                containArr.push(row)
             }
             for (var i = 0; i < arr.length; i++) {
-            var x = arr.splice(i, 1);
-            cont.push(x);
-            comboLoop(arr, cont);
-            cont.pop();
-            arr.splice(i, 0, x);
+                var x = arr.splice(i, 1);
+                cont.push(x);
+                comboLoop(arr, cont);
+                cont.pop();
+                arr.splice(i, 0, x);
             }
         }
         comboLoop(arr, cont);
